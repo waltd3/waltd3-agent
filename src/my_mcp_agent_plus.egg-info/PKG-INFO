@@ -1,0 +1,111 @@
+Metadata-Version: 2.4
+Name: my-mcp-agent-plus
+Version: 0.1.0
+Summary: Personal memory agent with automatic extraction, semantic search, web UI, and local MCP server
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: openai>=1.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: fastapi>=0.110.0
+Requires-Dist: uvicorn>=0.29.0
+Requires-Dist: jinja2>=3.1.0
+Requires-Dist: python-multipart>=0.0.9
+Requires-Dist: mcp>=1.0.0
+
+# my-mcp-agent-plus
+
+A local personal-memory agent with:
+
+- automatic memory extraction after every turn
+- semantic memory search with embeddings
+- lightweight FastAPI web UI
+- local MCP server exposing agent tools
+
+## What it does
+
+1. Stores your profile and long-term memories in SQLite
+2. Generates embeddings for each memory
+3. Retrieves the most semantically relevant memories for new questions
+4. Runs a second pass after each reply to extract durable memory
+5. Exposes the agent over:
+   - CLI chat
+   - browser UI
+   - MCP tools
+
+## macOS setup with uv
+
+```bash
+cp .env.example .env
+# edit .env and add OPENAI_API_KEY
+
+uv sync
+uv run python scripts/init_db.py
+```
+
+## Run the web UI
+
+```bash
+uv run uvicorn my_mcp_agent.web:app --reload
+```
+
+Then open:
+
+- http://127.0.0.1:8000
+
+## Run the CLI
+
+```bash
+uv run python scripts/chat.py
+```
+
+## Run the MCP server
+
+```bash
+uv run python scripts/mcp_server.py
+```
+
+This runs over stdio, which is the common local transport for MCP servers.
+
+## Example Claude Desktop MCP config
+
+Update the path to wherever you unzip this project:
+
+```json
+{
+  "mcpServers": {
+    "my-mcp-agent": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/ABSOLUTE/PATH/TO/my-mcp-agent-plus",
+        "run",
+        "python",
+        "scripts/mcp_server.py"
+      ]
+    }
+  }
+}
+```
+
+## MCP tools included
+
+- `chat`
+- `set_profile_value`
+- `get_profile`
+- `add_memory`
+- `search_memories`
+- `recent_memories`
+
+## Suggested first-run seed ideas
+
+- preferred_tone = direct, practical
+- platform = macOS
+- preferred_code_style = concise, copy-pasteable
+- primary_languages = Python, Laravel, PHP
+
+## Notes
+
+- The app uses `text-embedding-3-small` for semantic search.
+- Automatic memory extraction is conservative by design.
+- You can review and delete rows directly in SQLite if needed.

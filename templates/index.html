@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>my-mcp-agent-plus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>my-mcp-agent-plus</h1>
+      <p class="muted">Local personal agent with memory extraction, embeddings search, web UI, and MCP tools.</p>
+      <p><a href="/memories">Open memory review</a></p>
+
+      <form method="post" action="/chat" class="stack">
+        <label for="message">Ask the agent</label>
+        <textarea id="message" name="message" rows="5" placeholder="Example: Help me design a local AI assistant that remembers how I like things done.">{{ message or "" }}</textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    {% if result %}
+    <section class="card">
+      <h2>Reply</h2>
+      <div class="reply">{{ result.reply }}</div>
+
+      <h3>Extracted memory</h3>
+      {% if result.extracted %}
+        <pre>{{ result.extracted }}</pre>
+      {% else %}
+        <p class="muted">No durable memory extracted from this turn.</p>
+      {% endif %}
+
+      <h3>Matched memories</h3>
+      {% if result.matched_memories %}
+        <ul>
+          {% for item in result.matched_memories %}
+          <li><strong>[{{ item.type }}]</strong> {{ item.text }} <span class="muted">({{ item.tags }})</span></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No memories matched yet.</p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    <section class="grid">
+      <section class="card">
+        <h2>Profile</h2>
+        <form method="post" action="/profile" class="stack">
+          <input name="key" placeholder="key (e.g. preferred_tone)" required>
+          <input name="value" placeholder="value (e.g. direct, practical)" required>
+          <button type="submit">Save profile field</button>
+        </form>
+
+        <ul>
+          {% for key, value in profile.items() %}
+          <li><strong>{{ key }}</strong>: {{ value }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Recent memories</h2>
+        <ul>
+          {% for item in memories %}
+          <li>
+            <strong>[{{ item.type }}]</strong> {{ item.text }}
+            <div class="muted small">tags: {{ item.tags }} · confidence: {{ item.confidence }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

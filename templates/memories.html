@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Memory Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Memory Review</h1>
+      <p class="muted">Add, edit, and delete long-term memories.</p>
+      <p><a href="/">← Back to main app</a></p>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>Add memory</h2>
+        <form method="post" action="/memories/add" class="stack">
+          <input name="memory_type" placeholder="type (e.g. preference)" value="preference" required>
+          <textarea name="text" rows="5" placeholder="Memory text" required></textarea>
+          <input name="tags" placeholder="tags comma-separated (e.g. mac,python,style)">
+          <input name="confidence" type="number" min="0" max="1" step="0.01" value="0.85" required>
+          <button type="submit">Add memory</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>{% if editing %}Edit memory #{{ editing.id }}{% else %}Select a memory to edit{% endif %}</h2>
+
+        {% if editing %}
+        <form method="post" action="/memories/{{ editing.id }}/update" class="stack">
+          <input name="memory_type" value="{{ editing.type }}" required>
+          <textarea name="text" rows="6" required>{{ editing.text }}</textarea>
+          <input name="tags" value="{{ editing.tags }}">
+          <input name="confidence" type="number" min="0" max="1" step="0.01" value="{{ editing.confidence }}" required>
+          <button type="submit">Save changes</button>
+        </form>
+
+        <form method="post" action="/memories/{{ editing.id }}/delete" style="margin-top: 12px;">
+          <button type="submit">Delete memory</button>
+        </form>
+        {% else %}
+        <p class="muted">Click any memory below to edit it.</p>
+        {% endif %}
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>All memories</h2>
+      <ul>
+        {% for item in memories %}
+        <li style="margin-bottom: 14px;">
+          <div>
+            <a href="/memories/{{ item.id }}"><strong>[{{ item.type }}]</strong> {{ item.text }}</a>
+          </div>
+          <div class="muted small">
+            id: {{ item.id }} · tags: {{ item.tags }} · confidence: {{ item.confidence }}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
