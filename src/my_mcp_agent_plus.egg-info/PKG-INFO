@@ -1,5 +1,5 @@
 Metadata-Version: 2.4
-Name: my-mcp-agent-plus
+Name: waltd3-agent
 Version: 0.1.0
 Summary: Personal memory agent with automatic extraction, semantic search, web UI, and local MCP server
 Requires-Python: >=3.12
@@ -13,7 +13,7 @@ Requires-Dist: jinja2>=3.1.0
 Requires-Dist: python-multipart>=0.0.9
 Requires-Dist: mcp>=1.0.0
 
-# my-mcp-agent-plus
+# waltd3-agent
 
 A local personal-memory agent with:
 
@@ -74,11 +74,11 @@ Update the path to wherever you unzip this project:
 ```json
 {
   "mcpServers": {
-    "my-mcp-agent": {
+    "waltd3-agent": {
       "command": "uv",
       "args": [
         "--directory",
-        "/ABSOLUTE/PATH/TO/my-mcp-agent-plus",
+        "/ABSOLUTE/PATH/TO/waltd3-agent",
         "run",
         "python",
         "scripts/mcp_server.py"

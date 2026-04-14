@@ -6,7 +6,7 @@ from .agent import chat
 from .memory import maybe_upsert_memory, recent_memories, semantic_search_memories
 from .profile import get_profile, set_profile
 
-mcp = FastMCP("my-mcp-agent-plus")
+mcp = FastMCP("waltd3-agent")
 
 @mcp.tool()
 def chat_tool(message: str) -> dict:

@@ -462,7 +462,7 @@ wheels = [
 ]
 
 [[package]]
-name = "my-mcp-agent-plus"
+name = "waltd3-agent"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -1,5 +1,5 @@
 [project]
-name = "my-mcp-agent-plus"
+name = "waltd3-agent"
 version = "0.1.0"
 description = "Personal memory agent with automatic extraction, semantic search, web UI, and local MCP server"
 readme = "README.md"

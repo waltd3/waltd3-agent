@@ -1,4 +1,4 @@
-# my-mcp-agent-plus
+# waltd3-agent
 
 A local personal-memory agent with:
 
@@ -59,11 +59,11 @@ Update the path to wherever you unzip this project:
 ```json
 {
   "mcpServers": {
-    "my-mcp-agent": {
+    "waltd3-agent": {
       "command": "uv",
       "args": [
         "--directory",
-        "/ABSOLUTE/PATH/TO/my-mcp-agent-plus",
+        "/ABSOLUTE/PATH/TO/waltd3-agent",
         "run",
         "python",
         "scripts/mcp_server.py"
